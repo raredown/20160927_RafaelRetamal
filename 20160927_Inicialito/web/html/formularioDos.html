@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../js/jquery-3.1.1.js"></script>
+        <link rel="stylesheet" href="../cosascss/estilos.css" media="screen" title="no title">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <script src="../js/bootstrap.min.js"></script>
+    </head>
+    <body class="fondo" id="fondo">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4" id="formulario"> 
+
+                    <form method="post" action="../FormularioDos">
+                        <fieldset>
+                            <legend>Datos personales</legend>
+                            <div class="form-group">
+                                <label for="usuarioPrueba">Nombre</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="pwd" >Password:</label>
+                                <input type="password" class="form-control" id="pwd" name="Password">
+                            </div>
+                            <label for="edad">Edad: </label>
+
+                            <select class="selectpicker" name="edad">
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                            </select>
+
+                        </fieldset>
+                        <fieldset>
+
+                            <legend>Otros datos</legend>
+                            <div class="form-group">
+
+                                <label for="usuarioPrueba">Estado civil</label>
+                                <div class="radio">
+                                    <label class="radio-inline"><input type="radio" name="optradio" value="Soltero">Soltero</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio"  value="Casado">Casado</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio"  value="Viudo">Viudo</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio"  value="Diborciado">Divorciado</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sel1">Aficiones:</label>
+                                <select class="form-control" id="sel1" name="aficionillas" multiple>
+                                    <option name="aficiones"  value="informatica">Informatica</option>
+                                    <option name="aficiones" value="deporte">Deporte</option>
+                                    <option name="aficiones"  value="juegos">Juegos</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Commentario:</label>
+                                <textarea class="form-control" rows="1" id="comment" name="comentario"></textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+
+
+                            <legend>Medios Tecnol&oacute;gicos</legend>
+                            <div class="form-group">
+                                <label for="usuarioPrueba">Tienes internet</label>
+                                <div class="radio">
+
+                                    <label class="radio-inline"><input type="radio" name="intradio" value="Si">Si</label>
+                                    <label class="radio-inline"><input type="radio" name="intradio"  value="No">No</label>
+
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="sel1">Sistema Operativo:</label>
+                                <select class="form-control" id="sel1" name="sistemaoperativo">
+                                    <option name="aficiones"  value="window">Window</option>
+                                    <option name="aficiones" value="cosasdeapple">Apple</option>
+                                    <option name="aficiones"  value="linux">Debian</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="secreto" value="69">
+
+                            <button type="submit" class="btn-primary">Submit</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
