@@ -179,13 +179,15 @@ public class FormularioGuayDos extends HttpServlet {
                 out.println("</fieldset>");
                 out.println("");
                 out.println("<input type='submit' name=\"Bdos\" value='validar'/>");
-                out.println("<input type=\"button\" value=\"reset\" onclick = \"location='"+request.getContextPath()+"/html/formcorrectodos.html'\"/>");
+                out.println("<input type=\"button\" value=\"reset\" onclick = \"location='" + request.getContextPath() + "/html/formcorrectodos.html'\"/>");
                 out.println("</form>");
                 out.println("</div>");
                 out.println("</div>");
                 out.println("</div>");
             } else {
                 out.println("<p>datos enviado</p>");
+                out.println("<input type=\"button\" value=\"volver\" onclick = \"location='" + request.getContextPath() + "/html/formcorrectodos.html'\"/>");
+
             }
             out.println("</body>");
             out.println("</html>");
