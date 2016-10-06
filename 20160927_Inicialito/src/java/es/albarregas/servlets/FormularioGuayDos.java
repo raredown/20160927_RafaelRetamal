@@ -100,92 +100,148 @@ public class FormularioGuayDos extends HttpServlet {
                 out.println("<div class=\"row\">");
                 out.println("<div class=\"col-xs-6 col-sm-4\"> \n");
                 out.println(panelError);
-                out.println("<form method=\"post\" action=\"FormGuayDos\">");
-                out.println("<fieldset>");
-                out.println("<legend>Datos personales</legend>");
-                if (errNombre) {
-                    out.println("<div class=\"form-group has-error has-feedback\">");
+                if (request.getParameter("volver") == null) {
+                    out.println("<form method=\"post\" action=\"FormGuayDos\">");
 
+                    out.println("<input type=\"hidden\" class=\"form-control\" id=\"nombre\" name=\"nombre\" placeholder=\"Nombre\" value=\"" + request.getParameter("nombre") + "\">");
+                    out.println("<input type=\"hidden\" class=\"form-control\" id=\"apellidos\" name=\"apellidos\"  value=\"" + request.getParameter("apellidos") + "\">");
+                    out.println("<input type=\"hidden\" name=\"bday\" value=\"" + request.getParameter("bday") + "\">");
+                    out.println("<input type=\"hidden\" class=\"form-control\" id=\"usuario\" name=\"usuario\" value=\"" + request.getParameter("usuario") + "\" >");
+                    out.println("<input type=\"hidden\" class=\"form-control\" id=\"pwd\" name=\"Password\" value=\"" + request.getParameter("Password") + "\">");
+
+                    if (request.getParameter("deporte") != null) {
+                        out.println(" <input type=\"hidden\" name=\"deporte\" value=\"deporte\" checked>");
+                    } 
+                    if (request.getParameter("lectura") != null) {
+                        out.println(" <input type=\"hidden\" name=\"lectura\" value=\"lectura\" checked>");
+                    }
+                    if (request.getParameter("vagear") != null) {
+                        out.println(" <input type=\"hidden\" name=\"vagear\" value=\"vagear\" checked>");
+                    } 
+                    if (request.getParameter("holgacenear") != null) {
+                        out.println(" <input type=\"hidden\" name=\"holgacenear\" value=\"holgacenear\" checked>");
+                    } 
+                     if ("hombre".equals(request.getParameter("intradio"))) {
+                        out.println("<input type=\"hidden\" name=\"intradio\" value=\"hombre\" checked>");
+                      
+                    } else {
+                       
+                        out.println("<input type=\"hidden\" name=\"intradio\"  value=\"mujer\" checked>");
+                    }
+                    out.println("<input type='submit' name=\"volver\" value='volver'/>");
+
+                    out.println("</form>");
+                    out.println("</div>");
+                    out.println("</div>");
                 } else {
-                    out.println("<div class=\"form-group has-success has-feedback\">");
+                    out.println("<form method=\"post\" action=\"FormGuayDos\">");
+                    out.println("<fieldset>");
+                    out.println("<legend>Datos personales</legend>");
+                    if (errNombre) {
+                        out.println("<div class=\"form-group has-error has-feedback\">");
+
+                    } else {
+                        out.println("<div class=\"form-group has-success has-feedback\">");
+                    }
+                    //out.println("<div class=\"form-group\">");
+
+                    out.println("<label for=\"usuarioPrueba\">*Nombre</label>");
+                    out.println("<input type=\"text\" class=\"form-control\" id=\"nombre\" name=\"nombre\" placeholder=\"Nombre\" value=\"" + request.getParameter("nombre") + "\">");
+                    out.println("</div>");
+                    out.println("<div class=\"form-group\">");
+                    out.println("<label for=\"apellidos\">Apellidos</label>");
+                    out.println("<input type=\"text\" class=\"form-control\" id=\"apellidos\" name=\"apellidos\"  value=\"" + request.getParameter("apellidos") + "\">");
+                    out.println("</div>");
+                    out.println("<div class=\"form-group\">");
+                    out.println("<label for=\"fecha\">Fecha</label>");
+                    out.println("<input type=\"date\" name=\"bday\" value=\"" + request.getParameter("bday") + "\">");
+
+                    out.println("</div>");
+                    out.println("<div class=\"radio\">");
+                    if ("hombre".equals(request.getParameter("intradio"))) {
+                        out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\" value=\"hombre\" checked>Hombre</label>");
+                        out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\"  value=\"mujer\">Mujer</label>");
+                    } else {
+                        out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\" value=\"hombre\" >Hombre</label>");
+                        out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\"  value=\"mujer\" checked>Mujer</label>");
+                    }
+
+                    out.println("</div>");
+                    out.println("</fieldset>");
+                    out.println("<fieldset>");
+                    out.println("<legend>Informacion general</legend>");
+                    if (errUsuario) {
+                        out.println("<div class=\"form-group has-error has-feedback\">");
+
+                    } else {
+                        out.println("<div class=\"form-group has-success has-feedback\">");
+                    }
+                    out.println("<label for=\"usuario\">*Usuario</label>");
+                    out.println("<input type=\"text\" class=\"form-control\" id=\"usuario\" name=\"usuario\" value=\"" + request.getParameter("usuario") + "\" >");
+                    out.println("</div>");
+                    if (errPasword) {
+                        out.println("<div class=\"form-group has-error has-feedback\">");
+
+                    } else {
+                        out.println("<div class=\"form-group has-success has-feedback\">");
+                    }
+                    out.println("<label for=\"pwd\" >*Password:</label>");
+                    out.println("<input type=\"password\" class=\"form-control\" id=\"pwd\" name=\"Password\" value=\"" + request.getParameter("Password") + "\">");
+                    out.println("</div>");
+                    out.println("</fieldset>");
+                    out.println("<fieldset>");
+                    out.println("<legend>Informacion general</legend>");
+                    // out.println(request.getParameter("intradio"));
+                    if (request.getParameter("deporte") != null) {
+                        out.println(" <input type=\"checkbox\" name=\"deporte\" value=\"deporte\" checked> Deporte<br>");
+                    } else {
+                        out.println(" <input type=\"checkbox\" name=\"deporte\" value=\"deporte\"> Deporte<br>");
+
+                    }
+                    if (request.getParameter("lectura") != null) {
+                        out.println(" <input type=\"checkbox\" name=\"lectura\" value=\"lectura\" checked> lectura<br>");
+                    } else {
+                        out.println(" <input type=\"checkbox\" name=\"lectura\" value=\"lectura\"> lectura<br>");
+
+                    }
+                    if (request.getParameter("vagear") != null) {
+                        out.println(" <input type=\"checkbox\" name=\"vagear\" value=\"vagear\" checked> Vagear<br>");
+                    } else {
+                        out.println(" <input type=\"checkbox\" name=\"vagear\" value=\"vagear\"> Vagear<br>");
+
+                    }
+                    if (request.getParameter("holgacenear") != null) {
+                        out.println(" <input type=\"checkbox\" name=\"holgacenear\" value=\"holgacenear\" checked> Holgacenear<br>");
+                    } else {
+                        out.println(" <input type=\"checkbox\" name=\"holgacenear\" value=\"holgacenear\"> Holgacenear<br>");
+
+                    }
+                    out.println("</fieldset>");
+                    out.println("");
+                    out.println("<input type='submit' name=\"Bdos\" value='validar'/>");
+                    out.println("<input type=\"button\" value=\"reset\" onclick = \"location='" + request.getContextPath() + "/html/formcorrectodos.html'\"/>");
+                    out.println("</form>");
+                    out.println("</div>");
+                    out.println("</div>");
+                    out.println("</div>");
                 }
-                //out.println("<div class=\"form-group\">");
-
-                out.println("<label for=\"usuarioPrueba\">*Nombre</label>");
-                out.println("<input type=\"text\" class=\"form-control\" id=\"nombre\" name=\"nombre\" placeholder=\"Nombre\" value=\"" + request.getParameter("nombre") + "\">");
-                out.println("</div>");
-                out.println("<div class=\"form-group\">");
-                out.println("<label for=\"apellidos\">Apellidos</label>");
-                out.println("<input type=\"text\" class=\"form-control\" id=\"apellidos\" name=\"apellidos\"  value=\"" + request.getParameter("apellidos") + "\">");
-                out.println("</div>");
-                out.println("<div class=\"form-group\">");
-                out.println("<label for=\"fecha\">Fecha</label>");
-                out.println("<input type=\"date\" name=\"bday\" value=\"" + request.getParameter("bday") + "\">");
-
-                out.println("</div>");
-                out.println("<div class=\"radio\">");
-                if ("hombre".equals(request.getParameter("intradio"))) {
-                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\" value=\"hombre\" checked>Hombre</label>");
-                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\"  value=\"mujer\">Mujer</label>");
-                } else {
-                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\" value=\"hombre\" >Hombre</label>");
-                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"intradio\"  value=\"mujer\" checked>Mujer</label>");
-                }
-
-                out.println("</div>");
-                out.println("</fieldset>");
-                out.println("<fieldset>");
-                out.println("<legend>Informacion general</legend>");
-                if (errUsuario) {
-                    out.println("<div class=\"form-group has-error has-feedback\">");
-
-                } else {
-                    out.println("<div class=\"form-group has-success has-feedback\">");
-                }
-                out.println("<label for=\"usuario\">*Usuario</label>");
-                out.println("<input type=\"text\" class=\"form-control\" id=\"usuario\" name=\"usuario\" value=\"" + request.getParameter("usuario") + "\" >");
-                out.println("</div>");
-                if (errPasword) {
-                    out.println("<div class=\"form-group has-error has-feedback\">");
-
-                } else {
-                    out.println("<div class=\"form-group has-success has-feedback\">");
-                }
-                out.println("<label for=\"pwd\" >*Password:</label>");
-                out.println("<input type=\"password\" class=\"form-control\" id=\"pwd\" name=\"Password\" value=\"" + request.getParameter("Password") + "\">");
-                out.println("</div>");
-                out.println("</fieldset>");
-                out.println("<fieldset>");
-                out.println("<legend>Informacion general</legend>");
-                // out.println(request.getParameter("intradio"));
-                if (request.getParameter("deporte") != null) {
-                    out.println(" <input type=\"checkbox\" name=\"deporte\" value=\"deporte\" checked> Deporte<br>");
-                } else {
-                    out.println(" <input type=\"checkbox\" name=\"deporte\" value=\"deporte\"> Deporte<br>");
-
-                }
-                if (request.getParameter("lectura") != null) {
-                    out.println(" <input type=\"checkbox\" name=\"lectura\" value=\"lectura\" checked> lectura<br>");
-                } else {
-                    out.println(" <input type=\"checkbox\" name=\"lectura\" value=\"lectura\"> lectura<br>");
-
-                }
-                if (request.getParameter("vagear") != null) {
-                    out.println(" <input type=\"checkbox\" name=\"vagear\" value=\"vagear\" checked> Vagear<br>");
-                } else {
-                    out.println(" <input type=\"checkbox\" name=\"vagear\" value=\"vagear\"> Vagear<br>");
-
-                }
-                out.println("</fieldset>");
-                out.println("");
-                out.println("<input type='submit' name=\"Bdos\" value='validar'/>");
-                out.println("<input type=\"button\" value=\"reset\" onclick = \"location='" + request.getContextPath() + "/html/formcorrectodos.html'\"/>");
-                out.println("</form>");
-                out.println("</div>");
-                out.println("</div>");
-                out.println("</div>");
-            } else {
+            } //Else de if primero que compruebas los errores 
+            else {
                 out.println("<p>datos enviado</p>");
+                out.println("  <div class=\"panel-body\">");
+
+                java.util.Enumeration<String> parametros = request.getParameterNames();
+
+                while (parametros.hasMoreElements()) {
+      
+                    String elemento = parametros.nextElement();
+                    java.util.Enumeration<String> cabeceras = request.getHeaders(elemento);
+                    while (cabeceras.hasMoreElements()) {
+                    String valor = request.getParameter(elemento);
+                    out.println("<p>" + elemento + " - " + valor + "</p>");
+                    }
+                }
+                out.println("  <div>");
                 out.println("<input type=\"button\" value=\"volver\" onclick = \"location='" + request.getContextPath() + "/html/formcorrectodos.html'\"/>");
 
             }
