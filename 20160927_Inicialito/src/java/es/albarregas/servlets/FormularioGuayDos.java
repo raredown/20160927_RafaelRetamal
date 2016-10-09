@@ -19,11 +19,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "FormularioGuayDos", urlPatterns = {"/FormGuayDos"})
 public class FormularioGuayDos extends HttpServlet {
-
+/**
+ * Creo varias variables de errores por que controlo varios errores de la misma variable
+ */
     public boolean errNombre = true;
     public boolean errPasword = true;
     public boolean errUsuario = true;
-
+/**
+ * En este metodo compruebo si ahi errores y creo el panel de los errores para luego pintaro
+ * @param request
+ * @return un string q es el panel
+ * @throws ServletException
+ * @throws IOException 
+ */
     protected String controladorFormulario(HttpServletRequest request)
             throws ServletException, IOException {
 
@@ -82,6 +90,9 @@ public class FormularioGuayDos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            //pinto la cabecera por que para las dos pagina que ejecuta el servlet son iguales
+            
+            //pongo las variables de errores a true o false dependiendo 
             String panelError = controladorFormulario(request);
 
             out.println("<!DOCTYPE html>");
@@ -94,12 +105,15 @@ public class FormularioGuayDos extends HttpServlet {
             out.println("<script src=\"js/bootstrap.min.js\"></script>\n");
             out.println("</head>");
             out.println("<body>");
+            //compuebo si ahi ahi errores para pintar errores 
             if (errNombre || errPasword || errUsuario) {
 
                 out.println("<div class=\"container\">\n");
                 out.println("<div class=\"row\">");
                 out.println("<div class=\"col-xs-6 col-sm-4\"> \n");
+                //pinto los errores
                 out.println(panelError);
+                //si no ahi nigun parametro de volver pinto un form hidden de los datos para la segunda pagina y el boton de volver
                 if (request.getParameter("volver") == null) {
                     out.println("<form method=\"post\" action=\"FormGuayDos\">");
 
@@ -111,21 +125,21 @@ public class FormularioGuayDos extends HttpServlet {
 
                     if (request.getParameter("deporte") != null) {
                         out.println(" <input type=\"hidden\" name=\"deporte\" value=\"deporte\" checked>");
-                    } 
+                    }
                     if (request.getParameter("lectura") != null) {
                         out.println(" <input type=\"hidden\" name=\"lectura\" value=\"lectura\" checked>");
                     }
                     if (request.getParameter("vagear") != null) {
                         out.println(" <input type=\"hidden\" name=\"vagear\" value=\"vagear\" checked>");
-                    } 
+                    }
                     if (request.getParameter("holgacenear") != null) {
                         out.println(" <input type=\"hidden\" name=\"holgacenear\" value=\"holgacenear\" checked>");
-                    } 
-                     if ("hombre".equals(request.getParameter("intradio"))) {
+                    }
+                    if ("hombre".equals(request.getParameter("intradio"))) {
                         out.println("<input type=\"hidden\" name=\"intradio\" value=\"hombre\" checked>");
-                      
+
                     } else {
-                       
+
                         out.println("<input type=\"hidden\" name=\"intradio\"  value=\"mujer\" checked>");
                     }
                     out.println("<input type='submit' name=\"volver\" value='volver'/>");
@@ -133,7 +147,9 @@ public class FormularioGuayDos extends HttpServlet {
                     out.println("</form>");
                     out.println("</div>");
                     out.println("</div>");
-                } else {
+                } 
+                //si exicte el boton volver pintamos el mismo formulario q en el html
+                else {
                     out.println("<form method=\"post\" action=\"FormGuayDos\">");
                     out.println("<fieldset>");
                     out.println("<legend>Datos personales</legend>");
@@ -226,6 +242,7 @@ public class FormularioGuayDos extends HttpServlet {
                     out.println("</div>");
                 }
             } //Else de if primero que compruebas los errores 
+            // si no ahi errores mostramos la pantallas de datos enviados
             else {
                 out.println("<p>datos enviado</p>");
                 out.println("  <div class=\"panel-body\">");
@@ -233,14 +250,18 @@ public class FormularioGuayDos extends HttpServlet {
                 java.util.Enumeration<String> parametros = request.getParameterNames();
 
                 while (parametros.hasMoreElements()) {
-      
                     String elemento = parametros.nextElement();
-                    java.util.Enumeration<String> cabeceras = request.getHeaders(elemento);
-                    while (cabeceras.hasMoreElements()) {
-                    String valor = request.getParameter(elemento);
-                    out.println("<p>" + elemento + " - " + valor + "</p>");
+                    String[] parametritos;
+                    parametritos = request.getParameterValues(elemento);
+                    out.println("<p> <strong>" + elemento + " : </strong>");
+
+                    for (String parametrito : parametritos) {
+                        out.println(parametrito);
                     }
+                    out.println("</p>");
+
                 }
+                out.println("  <div>");
                 out.println("  <div>");
                 out.println("<input type=\"button\" value=\"volver\" onclick = \"location='" + request.getContextPath() + "/html/formcorrectodos.html'\"/>");
 
