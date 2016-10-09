@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author rafa
  */
 @WebServlet(name = "FormularioGuay", urlPatterns = {"/FormularioGuay"})
-public class FormularioGuay extends HttpServlet {
+public class FormularioEnsServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
