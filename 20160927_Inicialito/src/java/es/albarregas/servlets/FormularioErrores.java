@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author rafa
  */
 @WebServlet(name = "FormularioGuayDos", urlPatterns = {"/FormGuayDos"})
-public class FormularioGuayDos extends HttpServlet {
+public class FormularioErrores extends HttpServlet {
 /**
  * Creo varias variables de errores por que controlo varios errores de la misma variable
  */
