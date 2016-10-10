@@ -12,35 +12,61 @@
         <title>JSP Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="js/jquery-3.1.1.js"></script>
-        <link rel="stylesheet" href="cosascss/estilos.css" media="screen" title="no title">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <script src="js/bootstrap.min.js"></script>
+        <script src="../js/jquery-3.1.1.js"></script>
+        <link rel="stylesheet" href="../cosascss/estilos.css" media="screen" title="no title">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <script src="../js/bootstrap.min.js"></script>
     </head>
     <body>
         <h1>Calculadora</h1>
-        <div id="error">
-            <%!
-                public String calculetor(String primerNumero, String segundoNumero, String operacion) {
-                    String resultado = null;
-                    try {
-                        int param1 = Integer.parseInt(primerNumero);
-                        int param2 = Integer.parseInt(segundoNumero);
-                    } catch (NumberFormatException ex) {
-                        resultado = "Alguno de los números no contenía dígitos válidos";
+
+        <%!
+            public String calculetor(String primerNumero, String segundoNumero, String operacion) {
+                String resultado = null;
+                try {
+                    int param1 = Integer.parseInt(primerNumero);
+                    int param2 = Integer.parseInt(segundoNumero);
+                    switch (operacion) {
+
+                        case "sumar":
+                            int suma = param1 + param2;
+                            resultado = String.valueOf(suma);
+                            break;
+                        case "restar":
+                            int resta = param1 - param2;
+                            resultado = String.valueOf(resta);
+                            break;
+                        case "dividir":
+                            try {
+                                int division = param1 / param2;
+                                resultado = String.valueOf(division);
+                            } catch (ArithmeticException e) {
+                                resultado ="un numero no puede ser divisible por 0";
+                            }
+
+                            break;
+                        case "multiplicar":
+                            int multiplicar = param1 * param2;
+                            resultado = String.valueOf(multiplicar);
+                            break;
                     }
-                    return resultado;
+                } catch (NumberFormatException ex) {
+                    resultado = "Alguno de los números no contenía dígitos válidos";
                 }
+                return resultado;
+            }
 
-            %>
-            <% if (false) {
-                    calculetor(request.getParameter("primernumber"), request.getParameter("segundonumber"), request.getParameter("optradio"));
+        %>
+        <%
 
-                } else {
-                }
-            %>
+            if (request.getParameter("boton") != null) {
 
-        </div>
+                String error = calculetor(request.getParameter("primernumber"), request.getParameter("segundonumber"), request.getParameter("optradio"));
+        %><%= error%><%
+        } 
+        %>
+
+
         <form action="../jsp/Calculadora.jsp">
             Primer numero:<input type="text" name="primernumber" value="">
             Segundo numero:<input type="text" name="segundonumber" value="">
