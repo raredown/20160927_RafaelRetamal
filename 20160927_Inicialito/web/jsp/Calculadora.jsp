@@ -30,16 +30,16 @@
 
                         case "sumar":
                             int suma = param1 + param2;
-                            resultado = String.valueOf(suma);
+                            resultado = "Los numero "+primerNumero+" "+segundoNumero+" en la operacion de "+operacion+"es igual a" +String.valueOf(suma);
                             break;
                         case "restar":
                             int resta = param1 - param2;
-                            resultado = String.valueOf(resta);
+                            resultado = "Los numero "+primerNumero+" "+segundoNumero+" en la operacion de "+operacion+"es igual a" +String.valueOf(resta);
                             break;
                         case "dividir":
                             try {
                                 int division = param1 / param2;
-                                resultado = String.valueOf(division);
+                                resultado = "Los numero "+primerNumero+" "+segundoNumero+" en la operacion de "+operacion+"es igual a" +String.valueOf(division);
                             } catch (ArithmeticException e) {
                                 resultado ="un numero no puede ser divisible por 0";
                             }
@@ -47,7 +47,7 @@
                             break;
                         case "multiplicar":
                             int multiplicar = param1 * param2;
-                            resultado = String.valueOf(multiplicar);
+                            resultado = "Los numero "+primerNumero+" "+segundoNumero+" en la operacion de "+operacion+"es igual a" +String.valueOf(multiplicar);
                             break;
                     }
                 } catch (NumberFormatException ex) {
