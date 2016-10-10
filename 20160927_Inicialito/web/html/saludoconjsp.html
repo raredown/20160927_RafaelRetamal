@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../js/jquery-3.1.1.js"></script>
+        <link rel="stylesheet" href="../cosascss/estilos.css" media="screen" title="no title">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <script src="../js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4"> 
+
+                    <form method="post" action="../jsp/Saludojsp.jsp">
+                        <fieldset>
+
+                            <div class="form-group">
+                                <label for="usuarioPrueba">Nombre</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre" value="">
+                            </div>
+
+                            <div class="radio">
+                                <label class="radio-inline"><input type="radio" name="intradio" value="hombre" checked>Hombre</label>
+                                <label class="radio-inline"><input type="radio" name="intradio"  value="mujer">Mujer</label>
+                            </div>
+                            <input type='submit' name="Bdos" value='validar'/>                   
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
