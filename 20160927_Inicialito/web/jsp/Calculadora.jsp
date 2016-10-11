@@ -4,6 +4,9 @@
     Author     : Daw2
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -61,11 +64,14 @@
                     }
 
                     public String metodoHora() {
+                        java.util.Date fecha = new Date();
+                        SimpleDateFormat formato = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es"));
+                        String fechados = formato.format(new Date());
                         Calendar c = Calendar.getInstance();
                         String dia = Integer.toString(c.get(Calendar.DATE));
                         String mes = Integer.toString(c.get(Calendar.MONTH));
                         String annio = Integer.toString(c.get(Calendar.YEAR));
-                        return "La fecha de hoy es " + dia + "/" + mes + "/" + annio;
+                        return "La fecha de hoy es " + dia + "/" + mes + "/" + annio + "o como a jesus le gusta "+fechados;
                     }
 
                 %>
@@ -81,7 +87,7 @@
                         Información
                     </div><div class="panel-footer"><p><%= error%></p><p><%= navegador%></p><p><%= fecha%></p></div> </div><%
                         }
-                    %>
+                            %>
 
 
                 <form action="../jsp/Calculadora.jsp">
@@ -104,7 +110,7 @@
                     <br>
                     <input type="submit" name="boton" value="Enviar">
                     <input type="reset" value="reset">
-                    <input type=button onClick="location.href='../index.html'" value='indice'>
+                    <input type=button onClick="location.href = '../index.html'" value='indice'>
                 </form>
             </div>
         </div>
