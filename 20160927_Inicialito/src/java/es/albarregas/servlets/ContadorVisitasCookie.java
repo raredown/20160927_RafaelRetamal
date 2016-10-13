@@ -84,7 +84,13 @@ public class ContadorVisitasCookie extends HttpServlet {
             } catch (Exception e) {
             }
             response.addCookie(cookie);
-            out.println(cookie.getValue());
+            out.println("<p>El valor del contador es "+cookie.getValue()+"</p>");
+            out.println("<p>El dominio es "+cookie.getDomain()+"</p>");
+             out.println("<p>El path es  "+cookie.getPath()+"</p>");
+              out.println("<p>El nombre es "+cookie.getName()+"</p>");
+               out.println("<p>Es segura "+cookie.getSecure()+"</p>");
+                out.println("<p>La version de la cookie es "+cookie.getVersion()+"</p>");
+              
             // out.println(fallos);
             out.println("<form method=\"post\" action=\"ContadorVisitasServlet\">\n");
             out.println(" <input type='submit' name=\"Bdos\" value='Subir'/>");

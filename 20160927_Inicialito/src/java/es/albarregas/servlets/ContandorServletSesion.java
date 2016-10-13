@@ -106,7 +106,7 @@ public class ContandorServletSesion extends HttpServlet {
             //sesion.getCreationTime();
             //out.println(sesion.getAttribute("contador").toString());
             // out.println(sesion.isNew() + "llego");
-            out.println(cookie.getValue());
+            //out.println(cookie.getValue());
             out.println("<form method=\"post\" action=\"ContandorServlet\">\n");
             if (request.getParameter("chequeo") != null) {
                 Contador micontador = (Contador) sesion.getAttribute("contador");
@@ -114,6 +114,7 @@ public class ContandorServletSesion extends HttpServlet {
                 out.println(" <label><input type=\"checkbox\" name=\"chequeo\" checked> Sesion</label>");
             } else {
                 sesion.invalidate();
+                out.println("0");
                 out.println(" <label><input type=\"checkbox\" name=\"chequeo\"> Sesion</label>");
 
             }
