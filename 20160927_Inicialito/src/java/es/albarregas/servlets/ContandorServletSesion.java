@@ -40,17 +40,17 @@ public class ContandorServletSesion extends HttpServlet {
         String fallos = "";
         HttpSession sesion = request.getSession(true);
 
-        Object objeto = null;
-        objeto = sesion.getAttribute("contador");
-        if (objeto == null) {
+        if (sesion.getAttribute("contador") == null) {
             // Integer contadorcito = new Integer(0);
             Contador cuent = new Contador();
             cuent.setCuenta(1);
             sesion.setAttribute("contador", cuent);
         } else {
-            Contador cuent = new Contador();
-            cuent.setCuenta(cuent.getCuenta() + 1);
-            sesion.setAttribute("contador", cuent);
+            
+            Contador micontadorDos = (Contador) sesion.getAttribute("contador");
+
+            micontadorDos.setCuenta(micontadorDos.getCuenta() + 1);
+            sesion.setAttribute("contador", micontadorDos);
         }
 
         if (arrayCookie != null) {
@@ -109,13 +109,15 @@ public class ContandorServletSesion extends HttpServlet {
             out.println(cookie.getValue());
             out.println("<form method=\"post\" action=\"ContandorServlet\">\n");
             if (request.getParameter("chequeo") != null) {
+                Contador micontador = (Contador) sesion.getAttribute("contador");
+                out.println(micontador.getCuenta());
                 out.println(" <label><input type=\"checkbox\" name=\"chequeo\" checked> Sesion</label>");
             } else {
                 sesion.invalidate();
                 out.println(" <label><input type=\"checkbox\" name=\"chequeo\"> Sesion</label>");
 
             }
-           //sesion.getAttribute("contador");
+
             // out.println(sesion.getAttribute("contador").toString());
             out.println(" <input type='submit' name=\"Bdos\" value='Subir'/>");
             out.println(" <input type='submit' name=\"Bdos\" value='Limpiar'/>");
