@@ -35,20 +35,27 @@ public class ContadorVisitasServlet extends HttpServlet {
         Cookie cookie = null;
         Cookie arrayCookie[] = request.getCookies();
         String fallos = "";
-        for (Cookie arrayCookie1 : arrayCookie) {
-            if (arrayCookie1.getName().equals("CONTADOR")) {
-                fallos = "entro";
-                cookie = arrayCookie1;
-                String valor = cookie.getValue();
-                String valorcito = String.valueOf((Integer.parseInt(valor) + 1));
-                cookie.setValue(valorcito);
+     
+        for (int i = 0; i < arrayCookie.length; i++) {
+            //Cookie cookie1 = arrayCookie[i];
+            
+        //}
+          // for (Cookie arrayCookie1 : arrayCookie) { 
+            //if (arrayCookie[i].getName() != null) {
+                if (arrayCookie[i].getName().equals("CONTADOR")) {
+                    fallos = "entro";
+                    cookie = arrayCookie[i];
+                    String valor = cookie.getValue();
+                    String valorcito = String.valueOf((Integer.parseInt(valor) + 1));
+                    cookie.setValue(valorcito);
+              //  }
             }
         }
         if (cookie == null) {
             cookie = new Cookie("CONTADOR", "0");
             cookie.setMaxAge(300000);
         }
-        
+
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -69,16 +76,16 @@ public class ContadorVisitasServlet extends HttpServlet {
             String botonPulsado = null;
             botonPulsado = request.getParameter("Bdos");
             try {
-                if (botonPulsado.equals("Limpiar")&&!cookie.getValue().equals("0")) {
-                cookie = new Cookie("CONTADOR", "0");
-                cookie.setMaxAge(300000);
+                if (botonPulsado.equals("Limpiar") && !cookie.getValue().equals("0")) {
+                    cookie = new Cookie("CONTADOR", "0");
+                    cookie.setMaxAge(300000);
 
-            }
+                }
             } catch (Exception e) {
             }
             response.addCookie(cookie);
             out.println(cookie.getValue());
-           // out.println(fallos);
+            // out.println(fallos);
             out.println("<form method=\"post\" action=\"ContadorVisitasServlet\">\n");
             out.println(" <input type='submit' name=\"Bdos\" value='Subir'/>");
             out.println(" <input type='submit' name=\"Bdos\" value='Limpiar'/>");
