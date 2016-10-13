@@ -5,6 +5,7 @@
  */
 package es.albarregas.servlets;
 
+import es.albarregas.beans.Contador;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,13 +14,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Daw2
+ * @author rrd.informatica
  */
-@WebServlet(name = "ContadorVisitasServlet", urlPatterns = {"/ContadorVisitasServlet"})
-public class ContadorVisitasServlet extends HttpServlet {
+@WebServlet(name = "ContandorServlet", urlPatterns = {"/ContandorServlet"})
+public class ContandorServletSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,23 +34,40 @@ public class ContadorVisitasServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         Cookie cookie = null;
         Cookie arrayCookie[] = request.getCookies();
         String fallos = "";
-     
-        for (int i = 0; i < arrayCookie.length; i++) {
-            //Cookie cookie1 = arrayCookie[i];
-            
-        //}
-          // for (Cookie arrayCookie1 : arrayCookie) { 
-            //if (arrayCookie[i].getName() != null) {
+        HttpSession sesion = request.getSession(true);
+
+        Object objeto = null;
+        objeto = sesion.getAttribute("contador");
+        if (objeto == null) {
+            // Integer contadorcito = new Integer(0);
+            Contador cuent = new Contador();
+            cuent.setCuenta(1);
+            sesion.setAttribute("contador", cuent);
+        } else {
+            Contador cuent = new Contador();
+            cuent.setCuenta(cuent.getCuenta() + 1);
+            sesion.setAttribute("contador", cuent);
+        }
+
+        if (arrayCookie != null) {
+            for (int i = 0; i < arrayCookie.length; i++) {
+                //Cookie cookie1 = arrayCookie[i];
+
+                //}
+                // for (Cookie arrayCookie1 : arrayCookie) { 
+                //if (arrayCookie[i].getName() != null) {
                 if (arrayCookie[i].getName().equals("CONTADOR")) {
                     fallos = "entro";
                     cookie = arrayCookie[i];
                     String valor = cookie.getValue();
                     String valorcito = String.valueOf((Integer.parseInt(valor) + 1));
                     cookie.setValue(valorcito);
-              //  }
+                    //  }
+                }
             }
         }
         if (cookie == null) {
@@ -75,18 +94,29 @@ public class ContadorVisitasServlet extends HttpServlet {
 
             String botonPulsado = null;
             botonPulsado = request.getParameter("Bdos");
-            try {
+            if (botonPulsado != null) {
                 if (botonPulsado.equals("Limpiar") && !cookie.getValue().equals("0")) {
                     cookie = new Cookie("CONTADOR", "0");
                     cookie.setMaxAge(300000);
-
                 }
-            } catch (Exception e) {
             }
+
             response.addCookie(cookie);
+
+            //sesion.getCreationTime();
+            //out.println(sesion.getAttribute("contador").toString());
+            // out.println(sesion.isNew() + "llego");
             out.println(cookie.getValue());
-            // out.println(fallos);
-            out.println("<form method=\"post\" action=\"ContadorVisitasServlet\">\n");
+            out.println("<form method=\"post\" action=\"ContandorServlet\">\n");
+            if (request.getParameter("chequeo") != null) {
+                out.println(" <label><input type=\"checkbox\" name=\"chequeo\" checked> Sesion</label>");
+            } else {
+                sesion.invalidate();
+                out.println(" <label><input type=\"checkbox\" name=\"chequeo\"> Sesion</label>");
+
+            }
+           //sesion.getAttribute("contador");
+            // out.println(sesion.getAttribute("contador").toString());
             out.println(" <input type='submit' name=\"Bdos\" value='Subir'/>");
             out.println(" <input type='submit' name=\"Bdos\" value='Limpiar'/>");
             out.println("</form");
