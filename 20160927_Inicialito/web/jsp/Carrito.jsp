@@ -4,6 +4,8 @@
     Author     : Daw2
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="es.albarregas.beans.Libro"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,24 +21,69 @@
     <body>
         <%
             HttpSession sesion = request.getSession(true);
+            boolean finalizar = false;
+            if (sesion.isNew()) {
+                ArrayList<Libro> array = new ArrayList();
+                sesion.setAttribute("libros", array);
+            }
             //comprovamos si es la primera vez que entramos o no
             if (request.getParameter("boton") != null) {
-                String nombreLib = request.getParameter("libro");
-                Libro librecito = new Libro();
-                //Comprovamos si es un numero corregtor
-                try {
-                    int cantidad = Integer.parseInt(request.getParameter("cantidad"));
-                    librecito.setCantidad(cantidad);
-                } catch (Exception e) {
-                    out.println("numero no corrector");
+                if (request.getParameter("boton").equals("Anadir")) {
+                    String nombreLib = request.getParameter("libro");
+                    Libro librecito = new Libro();
+
+                    //Comprovamos si es un numero corregtor
+                    try {
+                        int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+                        if (cantidad > 0) {
+                            //comprovamos si a selecionado un libro 
+                            if (nombreLib == null) {
+                                out.println("no as cojido nigun libro");
+                            } else {
+                                ArrayList<Libro> array = (ArrayList) sesion.getAttribute("libros");
+                                Iterator<Libro> it = array.iterator();
+                                boolean estas = false;
+                                while (it.hasNext()) {
+                                    Libro libre = it.next();
+                                    //out.println(libre.getNombre());
+                                   // out.println("iiuijj");
+                                   librecito.setNombre(nombreLib);
+                                    if(libre.getNombre().equals(librecito.getNombre())){
+                                        estas =true;
+                                       // out.println("igual");
+                                        libre.setCantidad(cantidad+libre.getCantidad());
+                                    }
+                                }
+                                if(estas){
+                                }else{
+                                
+                                librecito.setCantidad(cantidad);
+                                array.add(librecito);
+                                
+                                }
+                                //debemos comprobar si esta vacio o no y los errores
+
+                              sesion.setAttribute("libros", array);
+                            }
+
+                        } else {
+                            out.println("numero no puede ser 0 o negativo");
+                        }
+                    } catch (Exception e) {
+                        out.println("numero no corrector");
+                    }
+
+                } else if (request.getParameter("boton").equals("Finalizar compra")) {
+                    finalizar = true;
+                    ArrayList<Libro> array = (ArrayList) sesion.getAttribute("libros");
+                    Iterator<Libro> it = array.iterator();
+                    while (it.hasNext()) {
+                        Libro libre = it.next();
+                        out.println(libre.getNombre());
+                        out.println(libre.getCantidad());
+                    }
+
                 }
-                //comprovamos si a selecionado un libro 
-                if (nombreLib == null) {
-                    out.println("no as cojido nigun libro");
-                } else {
-                    librecito.setNombre(nombreLib);
-                }
-                //preguntamos si la sesion a sido creada por primera vez o no para hacer el nuevo parametro o cogerlo
             }
 
         %>
@@ -47,6 +94,8 @@
                     <div id="error">
 
                     </div>
+                    <% if (!finalizar) {
+                    %>
                     <form method="post" action="../jsp/Carrito.jsp">
                         <label for="">Carrito:</label><br>
                         <select size="4" name="libro">
@@ -63,10 +112,15 @@
                             <label for="cantidad">Cantidad</label>
                             <input type="text" class="form-control" id="cantidad" name="cantidad">
                         </div>
-                        <input type="submit" name="boton" value="Añadir">
+                        <input type="submit" name="boton" value="Anadir">
                         <input type="submit" name="boton" value="Finalizar compra">
                         <input type="reset" value="limpiar">
                     </form>
+                    <% } else {
+                    %>
+                    <p>codigo</p>
+                    <% }
+                    %>
                 </div>
             </div>
         </div>
