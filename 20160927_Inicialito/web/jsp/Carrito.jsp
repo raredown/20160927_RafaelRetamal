@@ -22,6 +22,7 @@
         <%
             HttpSession sesion = request.getSession(true);
             boolean finalizar = false;
+            String mensaje = "";
             if (sesion.isNew()) {
                 ArrayList<Libro> array = new ArrayList();
                 sesion.setAttribute("libros", array);
@@ -38,7 +39,8 @@
                         if (cantidad > 0) {
                             //comprovamos si a selecionado un libro 
                             if (nombreLib == null) {
-                                out.println("no as cojido nigun libro");
+                                //    out.println("no as cojido nigun libro");
+                                mensaje = "no as cojido nigun libro";
                             } else {
                                 ArrayList<Libro> array = (ArrayList) sesion.getAttribute("libros");
                                 Iterator<Libro> it = array.iterator();
@@ -52,11 +54,13 @@
                                     if (libre.getNombre().equals(librecito.getNombre())) {
                                         estas = true;
                                         // out.println("igual");
+                                        mensaje = "Has sumado la cantidad de " + cantidad + " al libro " + libre.getNombre();
                                         libre.setCantidad(cantidad + libre.getCantidad());
                                     }
                                 }
                                 if (estas) {
                                 } else {
+                                    mensaje = "Has introducido la cantidad de " + cantidad + " al libro " + nombreLib;
 
                                     librecito.setCantidad(cantidad);
                                     array.add(librecito);
@@ -68,10 +72,12 @@
                             }
 
                         } else {
-                            out.println("numero no puede ser 0 o negativo");
+                            //  out.println("numero no puede ser 0 o negativo");
+                            mensaje = "numero no puede ser 0 o negativo";
                         }
                     } catch (Exception e) {
-                        out.println("numero no corrector");
+                        //out.println("numero no corrector");
+                        mensaje = "numero no corrector";
                     }
 
                 } else if (request.getParameter("boton").equals("Finalizar compra")) {
@@ -80,22 +86,33 @@
                     Iterator<Libro> it = array.iterator();
                     while (it.hasNext()) {
                         Libro libre = it.next();
-                        out.println(libre.getNombre());
-                        out.println(libre.getCantidad());
+                       // out.println(libre.getNombre());
+                       // out.println(libre.getCantidad());
                     }
 
                 }
             }
 
         %>
-        <h1>Hello World!</h1>
+        
         <div class="container">
             <div class="row">
                 <div class="col-xs-6 col-sm-4"> 
+                    <h2>Bienvenido a mi tienda¡</h2>
+                    <img src="../imagenes/carrito.jpg" class="img-rounded" alt="Cinque Terre" width="304" height="236">
                     <div id="error">
 
                     </div>
                     <% if (!finalizar) {
+                    %>
+                    <% if (!mensaje.equals("")) {
+                    %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Panel Informacion</div>
+                        <div class="panel-body"><%= mensaje%></div>
+                    </div>
+
+                    <%}
                     %>
                     <form method="post" action="../jsp/Carrito.jsp">
                         <label for="">Carrito:</label><br>
@@ -118,23 +135,49 @@
                         <input type="reset" value="limpiar">
                     </form>
                     <% } else {
-                        ArrayList<Libro> array = (ArrayList) sesion.getAttribute("libros");
-                        Iterator<Libro> it = array.iterator();
-                        while (it.hasNext()) {
-                            Libro libre = it.next();
-                            //out.println(libre.getNombre());
-                            //out.println(libre.getCantidad());
-                            
-                        
+                        ArrayList<Libro> arrayPrueba = new ArrayList();
+                        boolean lleno = true;
+                        if (sesion.getAttribute("libros").equals(arrayPrueba)) {
+                            //out.println("vacio");
+                            lleno = false;
+                        }
                     %>
-                    <p><%= libre.getNombre()%><%= libre.getCantidad()%></p>
-                    
-                    <% }
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Libros</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                ArrayList<Libro> array = (ArrayList) sesion.getAttribute("libros");
+                                Iterator<Libro> it = array.iterator();
+                                while (it.hasNext()) {
+                                    Libro libre = it.next();
+                                    //out.println(libre.getNombre());
+                                    //out.println(libre.getCantidad());
+
+
+                            %>
+                        <tr><td><%= libre.getNombre()%></td><td><%= libre.getCantidad()%></td></tr>
+
+                        <% }%>
+                        </tbody>
+                    </table>
+
+                    <%
+                        if (lleno) {
                     %>
-                    <p><a href="../index.html">gracias por su compra</a></p>
-                     <%
-                         sesion.invalidate();
-                    }
+                    <p class="text-center"><a href="../index.html">gracias por su compra</a></p>
+                    <%} else {
+                    %>
+                    <p class="text-center"><a href="../index.html">no as comprado nada</a></p>
+                    <%
+                            }
+
+                            sesion.invalidate();
+                        }
                     %>
                 </div>
             </div>
