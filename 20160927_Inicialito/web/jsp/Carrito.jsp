@@ -42,28 +42,29 @@
                             } else {
                                 ArrayList<Libro> array = (ArrayList) sesion.getAttribute("libros");
                                 Iterator<Libro> it = array.iterator();
+                                librecito.setNombre(nombreLib);
                                 boolean estas = false;
                                 while (it.hasNext()) {
                                     Libro libre = it.next();
                                     //out.println(libre.getNombre());
-                                   // out.println("iiuijj");
-                                   librecito.setNombre(nombreLib);
-                                    if(libre.getNombre().equals(librecito.getNombre())){
-                                        estas =true;
-                                       // out.println("igual");
-                                        libre.setCantidad(cantidad+libre.getCantidad());
+                                    // out.println("iiuijj");
+
+                                    if (libre.getNombre().equals(librecito.getNombre())) {
+                                        estas = true;
+                                        // out.println("igual");
+                                        libre.setCantidad(cantidad + libre.getCantidad());
                                     }
                                 }
-                                if(estas){
-                                }else{
-                                
-                                librecito.setCantidad(cantidad);
-                                array.add(librecito);
-                                
+                                if (estas) {
+                                } else {
+
+                                    librecito.setCantidad(cantidad);
+                                    array.add(librecito);
+
                                 }
                                 //debemos comprobar si esta vacio o no y los errores
 
-                              sesion.setAttribute("libros", array);
+                                sesion.setAttribute("libros", array);
                             }
 
                         } else {
@@ -117,9 +118,23 @@
                         <input type="reset" value="limpiar">
                     </form>
                     <% } else {
+                        ArrayList<Libro> array = (ArrayList) sesion.getAttribute("libros");
+                        Iterator<Libro> it = array.iterator();
+                        while (it.hasNext()) {
+                            Libro libre = it.next();
+                            //out.println(libre.getNombre());
+                            //out.println(libre.getCantidad());
+                            
+                        
                     %>
-                    <p>codigo</p>
+                    <p><%= libre.getNombre()%><%= libre.getCantidad()%></p>
+                    
                     <% }
+                    %>
+                    <p><a href="../index.html">gracias por su compra</a></p>
+                     <%
+                         sesion.invalidate();
+                    }
                     %>
                 </div>
             </div>
