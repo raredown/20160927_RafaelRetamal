@@ -172,7 +172,7 @@
                     <p class="text-center"><a href="../index.html">gracias por su compra</a></p>
                     <%} else {
                     %>
-                    <p class="text-center"><a href="../index.html">no as comprado nada</a></p>
+                    <p class="text-center"><a href="../index.html">no has comprado nada</a></p>
                     <%
                             }
 
